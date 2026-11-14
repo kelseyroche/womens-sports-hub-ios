@@ -25,7 +25,7 @@ struct DayView: View {
                     if !model.games.isEmpty {
                         sectionLabel("Your teams")
                         if pinned.isEmpty {
-                            invite
+                            if follows.keys.isEmpty { invite } else { nonePlaying }
                         } else {
                             ForEach(pinned) { linked($0) }
                         }
@@ -62,6 +62,17 @@ struct DayView: View {
             .task {
                 await model.load()
                 #if DEBUG
+                if offset == 0, path.isEmpty, let route = UserDefaults.standard.string(forKey: "rally-route") {
+                    let parts = route.split(separator: ":").map(String.init)
+                    if parts.count == 3 {
+                        switch parts[0] {
+                        case "game": path.append(GameRoute(leagueID: parts[1], eventID: parts[2]))
+                        case "team": path.append(TeamRoute(leagueID: parts[1], teamID: parts[2]))
+                        case "player": path.append(PlayerRoute(leagueID: parts[1], athleteID: parts[2]))
+                        default: break
+                        }
+                    }
+                }
                 if offset == 0, path.isEmpty,
                    let index = UserDefaults.standard.string(forKey: "rally-open").flatMap(Int.init),
                    model.games.indices.contains(index) {
@@ -114,6 +125,25 @@ struct DayView: View {
             .padding(.top, 10)
             .frame(maxWidth: .infinity, alignment: .leading)
             .overlay(alignment: .top) { Rectangle().fill(Theme.ink).frame(height: 2) }
+    }
+
+    private var nonePlaying: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("None of your teams play \(title.lowercased()). Their next games are on the Upcoming tab.")
+                .font(.headline)
+            Button {
+                router.tab = .upcoming
+            } label: {
+                Text("See upcoming games")
+                    .font(.headline)
+                    .padding(.horizontal, 24)
+                    .frame(minHeight: 48)
+                    .overlay(Rectangle().stroke(Theme.ink, lineWidth: 2))
+            }
+        }
+        .padding(20)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .overlay(Rectangle().stroke(Theme.ink, style: StrokeStyle(lineWidth: 2, dash: [6, 4])))
     }
 
     private var invite: some View {

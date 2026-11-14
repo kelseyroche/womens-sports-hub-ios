@@ -31,6 +31,7 @@ struct AccountView: View {
                         Text(message).font(.subheadline.weight(.semibold)).foregroundStyle(Color(hex: "B3261E"))
                     }
                     teamsSummary
+                    about
                 }
                 .padding(16)
             }
@@ -121,6 +122,21 @@ struct AccountView: View {
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("This removes your account and the teams synced to it. Teams saved on this phone stay.")
+        }
+    }
+
+    private var about: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            label("About Rally")
+            Text("Rally never shows betting odds, links to betting sites, or gambling advertising. Scores and schedules come from ESPN, and times are Eastern.")
+                .font(.subheadline)
+            HStack(spacing: 20) {
+                Link("Privacy policy", destination: SiteLinks.privacy)
+                Link("Terms", destination: SiteLinks.terms)
+                Link("Support", destination: SiteLinks.support)
+            }
+            .font(.subheadline.weight(.bold))
+            .padding(.top, 4)
         }
     }
 
