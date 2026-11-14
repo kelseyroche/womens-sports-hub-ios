@@ -35,5 +35,6 @@ targets:
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         PRODUCT_BUNDLE_IDENTIFIER: com.kelseyroche.rally
         SWIFT_VERSION: "6.0"
