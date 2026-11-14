@@ -8,5 +8,13 @@ enum AppTab: String, Hashable {
 @MainActor
 @Observable
 final class AppRouter {
-    var tab: AppTab = UserDefaults.standard.string(forKey: "rally-tab").flatMap(AppTab.init(rawValue:)) ?? .today
+    var tab: AppTab = .today
+
+    init() {
+        #if DEBUG
+        if let raw = UserDefaults.standard.string(forKey: "rally-tab"), let launchTab = AppTab(rawValue: raw) {
+            tab = launchTab
+        }
+        #endif
+    }
 }

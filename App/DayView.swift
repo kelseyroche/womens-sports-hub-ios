@@ -61,6 +61,7 @@ struct DayView: View {
             .refreshable { await model.load() }
             .task {
                 await model.load()
+                #if DEBUG
                 if offset == 0, path.isEmpty,
                    let index = UserDefaults.standard.string(forKey: "rally-open").flatMap(Int.init),
                    model.games.indices.contains(index) {
@@ -72,6 +73,7 @@ struct DayView: View {
                         path.append(TeamRoute(leagueID: model.games[index].leagueID, teamID: team))
                     }
                 }
+                #endif
             }
         }
     }

@@ -3,7 +3,11 @@ import RallyKit
 
 struct FollowingView: View {
     @Environment(FollowStore.self) private var follows
+    #if DEBUG
     @State private var selected: GroupID = UserDefaults.standard.string(forKey: "rally-group").flatMap(GroupID.init(rawValue:)) ?? .wnba
+    #else
+    @State private var selected: GroupID = .wnba
+    #endif
     @State private var teams: [GroupID: [Team]] = [:]
     @State private var query = ""
     private let client = ESPNClient()
