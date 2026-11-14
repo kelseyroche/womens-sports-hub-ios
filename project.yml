@@ -1,0 +1,24 @@
+name: Rally
+options:
+  bundleIdPrefix: com.kelseyroche
+  deploymentTarget:
+    iOS: "17.0"
+packages:
+  RallyKit:
+    path: .
+targets:
+  Rally:
+    type: application
+    platform: iOS
+    sources: [App]
+    dependencies:
+      - package: RallyKit
+        product: RallyKit
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Rally
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
+        PRODUCT_BUNDLE_IDENTIFIER: com.kelseyroche.rally
+        SWIFT_VERSION: "6.0"
