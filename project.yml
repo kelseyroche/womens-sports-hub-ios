@@ -6,6 +6,12 @@ options:
 packages:
   RallyKit:
     path: .
+  Supabase:
+    url: https://github.com/supabase/supabase-swift
+    from: 2.0.0
+configFiles:
+  Debug: Config/Debug.xcconfig
+  Release: Config/Release.xcconfig
 targets:
   Rally:
     type: application
@@ -14,11 +20,20 @@ targets:
     dependencies:
       - package: RallyKit
         product: RallyKit
+      - package: Supabase
+        product: Supabase
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Rally
+        SupabaseURL: $(SUPABASE_URL)
+        SupabaseAnonKey: $(SUPABASE_ANON_KEY)
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations~iphone: [UIInterfaceOrientationPortrait]
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_KEY_UILaunchScreen_Generation: YES
-        INFOPLIST_KEY_CFBundleDisplayName: Rally
-        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
         PRODUCT_BUNDLE_IDENTIFIER: com.kelseyroche.rally
         SWIFT_VERSION: "6.0"

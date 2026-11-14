@@ -24,4 +24,31 @@ public enum EasternTime {
         calendar.timeZone = zone
         return calendar.date(byAdding: .day, value: days, to: date)!
     }
+
+    public static func heading(_ date: Date, relativeTo now: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = zone
+        formatter.dateFormat = "MMMM d"
+        let monthDay = formatter.string(from: date)
+        if day(date) == day(addingDays(1, to: now)) { return "Tomorrow, \(monthDay)" }
+        formatter.dateFormat = "EEEE, MMMM d"
+        return formatter.string(from: date)
+    }
+
+    public static func longDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = zone
+        formatter.dateFormat = "EEEE, MMMM d"
+        return formatter.string(from: date)
+    }
+
+    public static func shortDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = zone
+        formatter.dateFormat = "MMM d"
+        return formatter.string(from: date)
+    }
 }

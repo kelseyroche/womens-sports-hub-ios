@@ -20,11 +20,14 @@ struct GameTile: View {
                 Spacer()
                 status
             }
-            VStack(spacing: 8) {
-                teamRow(game.away)
-                teamRow(game.home)
+            HStack(alignment: .center, spacing: 12) {
+                VStack(spacing: 8) {
+                    teamRow(game.away)
+                    teamRow(game.home)
+                }
+                if game.state == .upcoming { kickoff }
             }
-            Text("\(EasternTime.clock(game.startsAt))\(game.venue.map { " · \($0)" } ?? "")")
+            Text(footerText)
                 .font(.caption)
         }
         .padding(16)
@@ -34,6 +37,28 @@ struct GameTile: View {
         .overlay(
             Rectangle().stroke(isLive ? Theme.ink : Color(hex: group.hue), lineWidth: 2)
         )
+    }
+
+    private var footerText: String {
+        let time = EasternTime.clock(game.startsAt)
+        if game.state == .upcoming { return game.venue ?? "" }
+        return "\(time)\(game.venue.map { " · \($0)" } ?? "")"
+    }
+
+    private var kickoff: some View {
+        let parts = EasternTime.clock(game.startsAt).split(separator: " ")
+        return VStack(alignment: .trailing, spacing: -14) {
+            Text(String(parts.first ?? ""))
+                .font(Theme.display(64))
+                .monospacedDigit()
+                .minimumScaleFactor(0.7)
+                .lineLimit(1)
+            Text(String(parts.last ?? ""))
+                .font(.subheadline.weight(.heavy))
+        }
+        .fixedSize()
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Kickoff \(EasternTime.clock(game.startsAt)) Eastern")
     }
 
     @ViewBuilder

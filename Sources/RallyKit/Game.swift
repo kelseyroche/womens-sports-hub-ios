@@ -4,7 +4,7 @@ public enum GameState: String, Sendable {
     case upcoming, live, final
 }
 
-public struct Side: Sendable, Identifiable {
+public struct Side: Sendable, Identifiable, Hashable {
     public let id: String
     public let name: String
     public let abbreviation: String
@@ -13,7 +13,7 @@ public struct Side: Sendable, Identifiable {
     public let rank: Int?
 }
 
-public struct Game: Sendable, Identifiable {
+public struct Game: Sendable, Identifiable, Hashable {
     public let id: String
     public let eventID: String
     public let leagueID: String
@@ -74,7 +74,7 @@ extension GameState {
 
 enum ESPNDate {
     static func parse(_ string: String) -> Date? {
-        for format in ["yyyy-MM-dd'T'HH:mmXXXXX", "yyyy-MM-dd'T'HH:mm:ssXXXXX"] {
+        for format in ["yyyy-MM-dd'T'HH:mmXXXXX", "yyyy-MM-dd'T'HH:mm:ssXXXXX", "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"] {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "en_US_POSIX")
             formatter.dateFormat = format
@@ -135,5 +135,17 @@ public enum Featuring {
             }
         }
         return (featured, more)
+    }
+}
+
+public enum FollowKey {
+    public static func make(sport: Sport, teamID: String) -> String {
+        "\(sport.rawValue):\(teamID)"
+    }
+
+    public static func keys(for game: Game) -> [String] {
+        guard let league = Catalog.league(game.leagueID) else { return [] }
+        let sport = Catalog.group(league.group).sport
+        return [game.home.id, game.away.id].map { make(sport: sport, teamID: $0) }
     }
 }

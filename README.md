@@ -2,6 +2,8 @@
 
 Native SwiftUI iPhone app for following women's sports across leagues. Companion to the web app in `../womens-sports-hub`.
 
+Every feature is built in both repos. The web app is the reference for design and behavior.
+
 ## Values
 
 - No monetary gambling. No odds, spreads, betting lines or sportsbook sponsors. Fantasy and free prediction games are fine.
@@ -28,7 +30,7 @@ Native SwiftUI iPhone app for following women's sports across leagues. Companion
 
 ## Status
 
-- Done: league catalog, ESPN scoreboard client, Tonight screen with game tiles.
+- Done: league catalog, ESPN scoreboard client, Today screen with game tiles.
 - Verified: core builds and returns live ESPN data; app sources typecheck against the macOS SDK.
 - Not yet verified: running on iPhone or the simulator, unit tests.
 - Next: Following (saved on device), Tomorrow and Upcoming, game screen, player screen, push alerts, widgets, Live Activities.

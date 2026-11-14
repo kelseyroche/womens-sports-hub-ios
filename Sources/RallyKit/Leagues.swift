@@ -14,6 +14,7 @@ public struct LeagueGroup: Sendable, Identifiable {
     public let sport: Sport
     public let hue: String
     public let crowded: Bool
+    public let teamSources: [String]
 }
 
 public struct League: Sendable, Identifiable {
@@ -25,13 +26,13 @@ public struct League: Sendable, Identifiable {
 
 public enum Catalog {
     public static let groups: [LeagueGroup] = [
-        LeagueGroup(id: .wnba, label: "WNBA", sport: .basketball, hue: "FF9A2E", crowded: false),
-        LeagueGroup(id: .ncaaw, label: "NCAA women's basketball", sport: .basketball, hue: "BBA7F0", crowded: true),
-        LeagueGroup(id: .ncaav, label: "NCAA volleyball", sport: .volleyball, hue: "F2545B", crowded: true),
-        LeagueGroup(id: .nwsl, label: "NWSL", sport: .soccer, hue: "0EA66B", crowded: false),
-        LeagueGroup(id: .england, label: "England", sport: .soccer, hue: "FF5AA5", crowded: false),
-        LeagueGroup(id: .europe, label: "Europe", sport: .soccer, hue: "4DB5FF", crowded: false),
-        LeagueGroup(id: .national, label: "National teams", sport: .soccer, hue: "3D5AFE", crowded: false),
+        LeagueGroup(id: .wnba, label: "WNBA", sport: .basketball, hue: "FF9A2E", crowded: false, teamSources: ["wnba"]),
+        LeagueGroup(id: .ncaaw, label: "NCAA women's basketball", sport: .basketball, hue: "BBA7F0", crowded: true, teamSources: ["ncaaw"]),
+        LeagueGroup(id: .ncaav, label: "NCAA volleyball", sport: .volleyball, hue: "F2545B", crowded: true, teamSources: ["ncaav"]),
+        LeagueGroup(id: .nwsl, label: "NWSL", sport: .soccer, hue: "0EA66B", crowded: false, teamSources: ["nwsl"]),
+        LeagueGroup(id: .england, label: "England", sport: .soccer, hue: "FF5AA5", crowded: false, teamSources: ["wsl"]),
+        LeagueGroup(id: .europe, label: "Europe", sport: .soccer, hue: "4DB5FF", crowded: false, teamSources: ["uwcl", "liga-f", "premiere-ligue"]),
+        LeagueGroup(id: .national, label: "National teams", sport: .soccer, hue: "3D5AFE", crowded: false, teamSources: ["world-cup", "euro", "nations-league", "friendlies"]),
     ]
 
     public static let leagues: [League] = [
