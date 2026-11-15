@@ -37,6 +37,8 @@ struct AccountView: View {
             }
             .scrollDismissesKeyboard(.interactively)
             .toolbar(.hidden, for: .navigationBar)
+            .rallyDestinations()
+            .task(id: follows.keys) { await follows.resolveMissing() }
             .background(Theme.chalk.ignoresSafeArea())
             .foregroundStyle(Theme.ink)
         }
@@ -148,6 +150,28 @@ struct AccountView: View {
                  ? "You aren't following any teams yet."
                  : "\(count) \(count == 1 ? "team" : "teams") followed\(auth.isSignedIn ? ", synced to your account" : ", saved on this phone").")
                 .font(.subheadline)
+            ForEach(follows.followedTeams) { team in
+                NavigationLink(value: TeamRoute(leagueID: team.leagueID, teamID: team.teamID)) {
+                    HStack(spacing: 14) {
+                        AsyncImage(url: team.logo) { image in
+                            image.resizable().scaledToFit().padding(6)
+                        } placeholder: {
+                            Color.clear
+                        }
+                        .frame(width: 44, height: 44)
+                        .background(Circle().fill(Theme.chalk))
+                        .overlay(Circle().stroke(Theme.rule, lineWidth: 1))
+                        Text(team.name).font(.title3.weight(.bold)).multilineTextAlignment(.leading)
+                        Spacer()
+                    }
+                    .padding(.vertical, 6)
+                    .overlay(alignment: .bottom) { Rectangle().fill(Theme.rule).frame(height: 1) }
+                }
+                .buttonStyle(.plain)
+            }
+            if follows.followedTeams.count < count {
+                ProgressView().padding(.vertical, 8)
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ import RallyKit
 
 struct FollowingView: View {
     @Environment(FollowStore.self) private var follows
+    @Environment(AppRouter.self) private var router
     #if DEBUG
     @State private var selected: GroupID = UserDefaults.standard.string(forKey: "rally-group").flatMap(GroupID.init(rawValue:)) ?? .wnba
     #else
@@ -40,6 +41,11 @@ struct FollowingView: View {
                     .font(Theme.display(88))
                     Text("\(follows.keys.count) \(follows.keys.count == 1 ? "team" : "teams") followed. Their games are pinned above everything else on Today.")
                         .font(.subheadline)
+                    if !follows.keys.isEmpty {
+                        Button("See the teams you follow") { router.tab = .account }
+                            .font(.subheadline.weight(.bold))
+                            .underline()
+                    }
                     chips
                     searchField
                     if allTeams.isEmpty {
@@ -144,7 +150,9 @@ struct FollowingView: View {
             }
             .buttonStyle(.plain)
             Spacer(minLength: 0)
-            Button(on ? "Following" : "Follow") { follows.toggle(key) }
+            Button(on ? "Following" : "Follow") {
+                follows.toggle(key, team: FollowedTeam(key: key, teamID: team.id, leagueID: team.leagueID, name: team.name, logo: team.logo))
+            }
                 .font(.subheadline.weight(.bold))
                 .frame(minWidth: 96, minHeight: 44)
                 .background(on ? Theme.ink : Color.clear)

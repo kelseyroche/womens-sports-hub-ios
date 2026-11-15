@@ -84,7 +84,9 @@ struct TeamView: View {
                         .font(.subheadline.weight(.semibold))
                 }
             }
-            Button(on ? "Following" : "Follow team") { follows.toggle(key) }
+            Button(on ? "Following" : "Follow team") {
+                follows.toggle(key, team: FollowedTeam(key: key, teamID: t.id, leagueID: leagueID, name: t.name, logo: t.logo))
+            }
                 .font(.subheadline.weight(.bold))
                 .padding(.horizontal, 18)
                 .frame(minHeight: 44)
