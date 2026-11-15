@@ -31,7 +31,7 @@ Rally never shows betting odds, links to betting sites or gambling ads.
 Rally is an independent app and isn't affiliated with or endorsed by any league, team or school shown.
 
 ## Keywords (100 max, comma separated, no spaces after commas)
-women's sports,WNBA,NWSL,WSL,scores,schedule,soccer,basketball,volleyball,live scores,UConn,Liberty
+WNBA,NWSL,WSL,scores,schedule,soccer,basketball,volleyball,live scores,UConn,Liberty,college,NCAA
 
 ## URLs
 - Support URL: https://womens-sports-hub-phi.vercel.app/support
